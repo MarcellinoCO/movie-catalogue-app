@@ -6,8 +6,6 @@
         <item name="colorAccent">@color/secondaryColor</item>
 
         <item name="fontFamily">@font/roboto_slab</item>
-
-        <item name="elevation">0dp</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
