@@ -14,4 +14,13 @@
         <item name="colorAccent">@color/secondaryColor</item>
     </style>
 
+    <style name="DetailsText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/primaryTextColor</item>
+    </style>
+
+    <style name="DetailsText.Header" parent="DetailsText">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/secondaryLightColor</item>
+    </style>
+
 </resources>

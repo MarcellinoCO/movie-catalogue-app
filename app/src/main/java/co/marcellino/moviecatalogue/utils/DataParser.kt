@@ -19,6 +19,7 @@ object DataParser {
     private const val KEY_RATING_VALUE = "Value"
 
     private const val KEY_RUNTIME = "Runtime"
+    private const val KEY_GENRE = "Genre"
     private const val KEY_PLOT = "Plot"
 
     private const val KEY_DIRECTOR = "Director"
@@ -50,9 +51,11 @@ object DataParser {
                     rating = ratingSourceObject.getString(KEY_RATING_VALUE),
 
                     runtime = movieObject.getString(KEY_RUNTIME),
+                    genre = movieObject.getString(KEY_GENRE),
                     plot = movieObject.getString(KEY_PLOT),
 
                     director = movieObject.getString(KEY_DIRECTOR),
+                    writer = movieObject.getString(KEY_WRITER),
                     actors = movieObject.getString(KEY_ACTORS),
                     awards = movieObject.getString(KEY_AWARDS)
                 )
@@ -88,6 +91,7 @@ object DataParser {
                     rating = ratingSourceObject.getString(KEY_RATING_VALUE),
 
                     runtime = showObject.getString(KEY_RUNTIME),
+                    genre = showObject.getString(KEY_GENRE),
                     plot = showObject.getString(KEY_PLOT),
 
                     writer = showObject.getString(KEY_WRITER),

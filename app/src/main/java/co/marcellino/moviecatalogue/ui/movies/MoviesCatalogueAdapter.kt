@@ -41,7 +41,7 @@ class MoviesCatalogueAdapter : RecyclerView.Adapter<MoviesCatalogueAdapter.Movie
                     resources.getString(R.string.format_catalogue_year, movie.year)
                 tv_catalogue_rating.text = movie.rating
 
-                Glide.with(context).load(movie.posterPath).apply(
+                Glide.with(context).load(movie.posterPath).centerCrop().apply(
                     RequestOptions.placeholderOf(R.drawable.ic_image_loading)
                         .error(R.drawable.ic_error)
                 ).into(iv_catalogue_poster)

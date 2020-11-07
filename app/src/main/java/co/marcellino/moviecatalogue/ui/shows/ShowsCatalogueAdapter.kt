@@ -41,7 +41,7 @@ class ShowsCatalogueAdapter : RecyclerView.Adapter<ShowsCatalogueAdapter.ShowHol
                     resources.getString(R.string.format_catalogue_year, show.year)
                 tv_catalogue_rating.text = show.rating
 
-                Glide.with(context).load(show.posterPath).apply(
+                Glide.with(context).load(show.posterPath).centerCrop().apply(
                     RequestOptions.placeholderOf(R.drawable.ic_image_loading)
                         .error(R.drawable.ic_error)
                 ).into(iv_catalogue_poster)

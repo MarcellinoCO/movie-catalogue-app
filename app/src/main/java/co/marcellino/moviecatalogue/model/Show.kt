@@ -8,6 +8,7 @@ data class Show(
     val rating: String,
 
     val runtime: String,
+    val genre: String,
     val plot: String,
 
     val writer: String,
