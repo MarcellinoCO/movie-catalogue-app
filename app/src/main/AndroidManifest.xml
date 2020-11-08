@@ -24,7 +24,9 @@
                 android:value=".ui.catalogue.CatalogueActivity" />
         </activity>
 
-        <activity android:name=".ui.catalogue.CatalogueActivity" />
+        <activity
+            android:name=".ui.catalogue.CatalogueActivity"
+            android:screenOrientation="fullSensor" />
 
         <activity
             android:name=".ui.SplashScreenActivity"

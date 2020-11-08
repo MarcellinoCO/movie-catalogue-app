@@ -3,12 +3,15 @@ package co.marcellino.moviecatalogue.ui.details
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import co.marcellino.moviecatalogue.R
 import co.marcellino.moviecatalogue.model.Movie
 import co.marcellino.moviecatalogue.model.Show
 import co.marcellino.moviecatalogue.utils.FormatDetails.getCastsFormat
 import co.marcellino.moviecatalogue.utils.FormatDetails.getGenreFormat
 import co.marcellino.moviecatalogue.utils.FormatDetails.getRuntimeFormat
+import co.marcellino.moviecatalogue.viewmodel.DetailsViewModel
+import co.marcellino.moviecatalogue.viewmodel.DetailsViewModel.Companion.TYPE_MOVIE
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_details.*
@@ -17,23 +20,37 @@ import kotlinx.android.synthetic.main.content_details.*
 class DetailsActivity : AppCompatActivity() {
 
     companion object {
-        const val EXTRA_TYPE = "type"
-        const val EXTRA_ENTITY = "Entity"
-
-        const val TYPE_MOVIE = 0
-        const val TYPE_SHOW = 1
+        const val EXTRA_TYPE = "extra_type"
+        const val EXTRA_ENTITY = "extra_entity"
     }
+
+    private lateinit var viewModel: DetailsViewModel
+
+    private lateinit var movie: Movie
+    private lateinit var show: Show
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
 
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        )[DetailsViewModel::class.java]
+
         setSupportActionBar(toolbar_details)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbar_details.setNavigationOnClickListener {
+            onBackPressed()
+        }
 
         val extras = intent.extras
         if (extras != null) {
-            val type = extras.getInt(EXTRA_TYPE)
+            val type =
+                if (viewModel.isTypeInitialized()) viewModel.type
+                else extras.getInt(EXTRA_TYPE)
+            viewModel.type = type
+
             supportActionBar?.title =
                 resources.getString(
                     if (type == TYPE_MOVIE) R.string.title_movie_details
@@ -41,10 +58,16 @@ class DetailsActivity : AppCompatActivity() {
                 )
 
             if (type == TYPE_MOVIE) {
-                val movie: Movie = extras.getParcelable(EXTRA_ENTITY) ?: Movie()
+                movie = if (viewModel.isMovieInitialized()) viewModel.movie
+                else extras.getParcelable(EXTRA_ENTITY) ?: Movie()
+
+                viewModel.movie = movie
                 populateMovieDetails(movie)
             } else {
-                val show: Show = extras.getParcelable(EXTRA_ENTITY) ?: Show()
+                show = if (viewModel.isShowInitialized()) viewModel.show
+                else extras.getParcelable(EXTRA_ENTITY) ?: Show()
+
+                viewModel.show = show
                 populateShowDetails(show)
             }
         }
