@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primaryColor"
+    tools:context=".ui.details.DetailsActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_vertical_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent=".5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_details_title"
+        style="@style/DetailsText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:elevation="4dp"
+        android:textColor="@color/secondaryLightColor"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="A Star is Born" />
+
+    <TextView
+        android:id="@+id/tv_details_year"
+        style="@style/DetailsText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@id/tv_details_title"
+        app:layout_constraintStart_toStartOf="@id/tv_details_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_details_title"
+        tools:text="2018" />
+
+    <ImageView
+        android:id="@+id/iv_details_poster"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/cd_poster"
+        android:elevation="4dp"
+        app:layout_constraintDimensionRatio="2:3"
+        app:layout_constraintEnd_toStartOf="@id/guide_vertical_center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_details_year" />
+
+    <TextView
+        android:id="@+id/tv_details_runtime"
+        style="@style/DetailsText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guide_vertical_center"
+        app:layout_constraintTop_toTopOf="@id/iv_details_poster"
+        tools:text="2h 16m" />
+
+    <TextView
+        android:id="@+id/tv_details_genre"
+        style="@style/DetailsText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@id/tv_details_runtime"
+        app:layout_constraintStart_toStartOf="@id/tv_details_runtime"
+        app:layout_constraintTop_toBottomOf="@id/tv_details_runtime"
+        tools:text="Drama / Music / Romance" />
+
+    <TextView
+        android:id="@+id/tv_details_rating"
+        style="@style/DetailsText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:drawablePadding="4dp"
+        app:drawableStartCompat="@drawable/ic_star"
+        app:layout_constraintEnd_toEndOf="@id/tv_details_runtime"
+        app:layout_constraintStart_toStartOf="@id/tv_details_runtime"
+        app:layout_constraintTop_toBottomOf="@id/tv_details_genre"
+        tools:text="7.7/10" />
+
+    <!-- Plot -->
+
+    <TextView
+        android:id="@+id/tv_details_header_plot"
+        style="@style/DetailsText.Header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/header_plot"
+        app:layout_constraintEnd_toEndOf="@id/tv_details_title"
+        app:layout_constraintStart_toStartOf="@id/tv_details_title"
+        app:layout_constraintTop_toBottomOf="@id/iv_details_poster" />
+
+    <TextView
+        android:id="@+id/tv_details_plot"
+        style="@style/DetailsText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/tv_details_title"
+        app:layout_constraintStart_toStartOf="@id/tv_details_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_details_header_plot"
+        tools:text="A musician helps a young singer find fame as age and alcoholism send his own career into a downward spiral." />
+
+    <!-- Casts -->
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_vertical_cast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:constraint_referenced_ids="tv_details_header_director, tv_details_header_writer, tv_details_header_actors" />
+
+    <TextView
+        android:id="@+id/tv_details_header_casts"
+        style="@style/DetailsText.Header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/header_casts"
+        app:layout_constraintEnd_toEndOf="@id/tv_details_title"
+        app:layout_constraintStart_toStartOf="@id/tv_details_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_details_plot" />
+
+    <TextView
+        android:id="@+id/tv_details_header_director"
+        style="@style/DetailsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/header_director"
+        app:layout_constraintStart_toStartOf="@id/tv_details_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_details_header_casts" />
+
+    <TextView
+        android:id="@+id/tv_details_director"
+        style="@style/DetailsText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintEnd_toEndOf="@id/tv_details_title"
+        app:layout_constraintStart_toEndOf="@id/barrier_vertical_cast"
+        app:layout_constraintTop_toTopOf="@id/tv_details_header_director"
+        tools:text="Bradley Cooper" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_horizontal_director"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="tv_details_header_director, tv_details_director" />
+
+    <TextView
+        android:id="@+id/tv_details_header_writer"
+        style="@style/DetailsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/header_writer"
+        app:layout_constraintStart_toStartOf="@id/tv_details_title"
+        app:layout_constraintTop_toBottomOf="@id/barrier_horizontal_director" />
+
+    <TextView
+        android:id="@+id/tv_details_writer"
+        style="@style/DetailsText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintEnd_toEndOf="@id/tv_details_title"
+        app:layout_constraintStart_toEndOf="@id/barrier_vertical_cast"
+        app:layout_constraintTop_toTopOf="@id/tv_details_header_writer"
+        tools:text="Eric Roth (screenplay by)\nBradley Cooper (screenplay by)" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_horizontal_writer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="tv_details_header_writer, tv_details_writer" />
+
+    <TextView
+        android:id="@+id/tv_details_header_actors"
+        style="@style/DetailsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/header_actors"
+        app:layout_constraintStart_toStartOf="@id/tv_details_title"
+        app:layout_constraintTop_toBottomOf="@id/barrier_horizontal_writer" />
+
+    <TextView
+        android:id="@+id/tv_details_actors"
+        style="@style/DetailsText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintEnd_toEndOf="@id/tv_details_title"
+        app:layout_constraintStart_toEndOf="@id/barrier_vertical_cast"
+        app:layout_constraintTop_toTopOf="@id/tv_details_header_actors"
+        tools:text="Lady Gaga\nBradley Cooper\nSam Elliott\nAndrew Dice Clay" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_horizontal_actors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="tv_details_header_actors, tv_details_actors" />
+
+    <!-- Awards -->
+
+    <TextView
+        android:id="@+id/tv_details_header_awards"
+        style="@style/DetailsText.Header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/header_awards"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/tv_details_title"
+        app:layout_constraintStart_toStartOf="@id/tv_details_title"
+        app:layout_constraintTop_toBottomOf="@id/barrier_horizontal_actors" />
+
+    <TextView
+        android:id="@+id/tv_details_awards"
+        style="@style/DetailsText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/tv_details_title"
+        app:layout_constraintStart_toStartOf="@id/tv_details_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_details_header_awards"
+        tools:text="Won 1 Oscar. Another 94 wins \&amp; 274 nominations." />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

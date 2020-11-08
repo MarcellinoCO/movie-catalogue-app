@@ -6,11 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import co.marcellino.moviecatalogue.R
 import co.marcellino.moviecatalogue.model.Movie
+import co.marcellino.moviecatalogue.ui.catalogue.CatalogueListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.item_catalogue.view.*
 
-class MoviesCatalogueAdapter : RecyclerView.Adapter<MoviesCatalogueAdapter.MovieHolder>() {
+class MoviesCatalogueAdapter(val listener: CatalogueListener) :
+    RecyclerView.Adapter<MoviesCatalogueAdapter.MovieHolder>() {
 
     private val listMovies = ArrayList<Movie>()
     fun setMoviesList(newListMovies: List<Movie>?) {
@@ -45,6 +47,10 @@ class MoviesCatalogueAdapter : RecyclerView.Adapter<MoviesCatalogueAdapter.Movie
                     RequestOptions.placeholderOf(R.drawable.ic_image_loading)
                         .error(R.drawable.ic_error)
                 ).into(iv_catalogue_poster)
+
+                setOnClickListener {
+                    listener.movieClicked(movie)
+                }
             }
         }
     }

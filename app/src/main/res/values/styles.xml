@@ -8,10 +8,9 @@
         <item name="fontFamily">@font/roboto_slab</item>
     </style>
 
-    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
-        <item name="colorAccent">@color/secondaryColor</item>
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="DetailsText" parent="TextAppearance.AppCompat">
@@ -21,6 +20,7 @@
     <style name="DetailsText.Header" parent="DetailsText">
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/secondaryLightColor</item>
+        <item name="elevation">4dp</item>
     </style>
 
 </resources>

@@ -3,17 +3,10 @@
 
     <string name="title_movies">Movies</string>
     <string name="title_shows">TV Shows</string>
+    <string name="title_movie_details">Movie Details</string>
+    <string name="title_show_details">TV Show Details</string>
 
     <string name="format_catalogue_year">(%1$s)</string>
-    <plurals name="format_details_runtime">
-        <item quantity="zero">%1$dm</item>
-        <item quantity="other">%1%dh %2$dm</item>
-    </plurals>
-    <plurals name="format_details_genre">
-        <item quantity="one">%1$s</item>
-        <item quantity="two">%1$s / %2$s</item>
-        <item quantity="other">%1$s / %2$s / %3$s</item>
-    </plurals>
 
     <string name="header_plot">Summary</string>
     <string name="header_casts">Casts</string>
