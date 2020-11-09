@@ -12,7 +12,7 @@ class DetailsViewModel : ViewModel() {
         const val TYPE_SHOW = 1
     }
 
-    var type = -1
+    var type = TYPE_UNINITIALIZED
     fun isTypeInitialized(): Boolean = (type != TYPE_UNINITIALIZED)
 
     lateinit var movie: Movie

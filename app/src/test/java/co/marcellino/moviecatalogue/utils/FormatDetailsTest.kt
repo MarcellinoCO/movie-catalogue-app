@@ -1,6 +1,6 @@
 package co.marcellino.moviecatalogue.utils
 
-import org.junit.Assert.assertEquals
+import org.junit.Assert.*
 import org.junit.Test
 
 class FormatDetailsTest {
@@ -10,7 +10,11 @@ class FormatDetailsTest {
         val expectedFormat = "2h 16m"
 
         val dummyFormat = "136 min"
-        assertEquals(expectedFormat, FormatDetails.getRuntimeFormat(dummyFormat))
+        val actualFormat = FormatDetails.getRuntimeFormat(dummyFormat)
+
+        assertNotNull(actualFormat)
+        assertNotEquals("", actualFormat)
+        assertEquals(expectedFormat, actualFormat)
     }
 
     @Test
@@ -18,6 +22,10 @@ class FormatDetailsTest {
         val expectedFormat = "5m"
 
         val dummyFormat = "5 min"
+        val actualFormat = FormatDetails.getRuntimeFormat(dummyFormat)
+
+        assertNotNull(actualFormat)
+        assertNotEquals("", actualFormat)
         assertEquals(expectedFormat, FormatDetails.getRuntimeFormat(dummyFormat))
     }
 
@@ -26,7 +34,11 @@ class FormatDetailsTest {
         val expectedFormat = "Drama / Music / Romance"
 
         val dummyFormat = "Drama, Music, Romance"
-        assertEquals(expectedFormat, FormatDetails.getGenreFormat(dummyFormat))
+        val actualFormat = FormatDetails.getGenreFormat(dummyFormat)
+
+        assertNotNull(actualFormat)
+        assertNotEquals("", actualFormat)
+        assertEquals(expectedFormat, actualFormat)
     }
 
     @Test
@@ -34,7 +46,11 @@ class FormatDetailsTest {
         val expectedFormat = "Drama"
 
         val dummyFormat = "Drama"
-        assertEquals(expectedFormat, FormatDetails.getGenreFormat(dummyFormat))
+        val actualFormat = FormatDetails.getGenreFormat(dummyFormat)
+
+        assertNotNull(actualFormat)
+        assertNotEquals("", actualFormat)
+        assertEquals(expectedFormat, actualFormat)
     }
 
     @Test
@@ -42,7 +58,11 @@ class FormatDetailsTest {
         val expectedFormat = "Drama / Music / Romance"
 
         val dummyFormat = "Drama, Music, Romance, Comedy, Action"
-        assertEquals(expectedFormat, FormatDetails.getGenreFormat(dummyFormat))
+        val actualFormat = FormatDetails.getGenreFormat(dummyFormat)
+
+        assertNotNull(actualFormat)
+        assertNotEquals("", actualFormat)
+        assertEquals(expectedFormat, actualFormat)
     }
 
     @Test
@@ -50,7 +70,11 @@ class FormatDetailsTest {
         val expectedFormat = "Bradley Cooper"
 
         val dummyFormat = "Bradley Cooper"
-        assertEquals(expectedFormat, FormatDetails.getCastsFormat(dummyFormat))
+        val actualFormat = FormatDetails.getCastsFormat(dummyFormat)
+
+        assertNotNull(actualFormat)
+        assertNotEquals("", actualFormat)
+        assertEquals(expectedFormat, actualFormat)
     }
 
     @Test
@@ -60,7 +84,11 @@ class FormatDetailsTest {
 
         val dummyFormat =
             "Eric Roth (screenplay by), Bradley Cooper (screenplay by), Will Fetters (screenplay by)"
-        assertEquals(expectedFormat, FormatDetails.getCastsFormat(dummyFormat))
+        val actualFormat = FormatDetails.getCastsFormat(dummyFormat)
+
+        assertNotNull(actualFormat)
+        assertNotEquals("", actualFormat)
+        assertEquals(expectedFormat, actualFormat)
     }
 
     @Test
@@ -68,6 +96,10 @@ class FormatDetailsTest {
         val expectedFormat = "Lady Gaga\nBradley Cooper\nSam Elliott\nAndrew Dice Clay"
 
         val dummyFormat = "Lady Gaga, Bradley Cooper, Sam Elliott, Andrew Dice Clay"
-        assertEquals(expectedFormat, FormatDetails.getCastsFormat(dummyFormat))
+        val actualFormat = FormatDetails.getCastsFormat(dummyFormat)
+
+        assertNotNull(actualFormat)
+        assertNotEquals("", actualFormat)
+        assertEquals(expectedFormat, actualFormat)
     }
 }
