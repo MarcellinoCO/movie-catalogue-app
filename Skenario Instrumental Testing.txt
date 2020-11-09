@@ -1,0 +1,33 @@
+Skenario instrumental testing:
+1. Menampilkan data Movies
+	Memastikan RecylerView 'rv_movies' tampil.
+	Scroll 'rv_movies' ke posisi data terakhir.
+
+2. Menampilkan data Movie Details
+	Memberi click pada data pertama 'rv_movies'.
+	Memastikan TextView dari 'tv_details_title' sesuai.
+	Memastikan ImageView 'iv_details_poster' tampil.
+
+3. Melakukan back press pada Movie Details.
+	Memberi click pada data pertama 'rv_movies'.
+	Memastikan TextView dari 'tv_details_title' sesuai.
+	Memastikan ImageView 'iv_details_poster' tampil.
+	Melakukan back press.
+	Memastikan RecylerView 'rv_movies' tampil.
+
+4. Menampilkan data TV Shows
+	Click TabLayout dengan teks 'TV Shows'.
+	Memastikan RecylerView 'rv_shows' tampil.
+	Scroll 'rv_shows' ke posisi data terakhir.
+
+5. Menampilkan data TV Shows Details
+	Memberi click pada data pertama 'rv_shows'.
+	Memastikan TextView dari 'tv_details_title' sesuai.
+	Memastikan ImageView 'iv_details_poster' tampil.
+
+3. Melakukan back press pada TV Shows Details.
+	Memberi click pada data pertama 'rv_shows'.
+	Memastikan TextView dari 'tv_details_title' sesuai.
+	Memastikan ImageView 'iv_details_poster' tampil.
+	Melakukan back press.
+	Memastikan RecylerView 'rv_shows' tampil.
