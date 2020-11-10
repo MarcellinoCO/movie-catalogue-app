@@ -26,5 +26,5 @@ class CataloguePagerAdapter(private val context: Context, fm: FragmentManager) :
     override fun getPageTitle(position: Int): CharSequence? =
         context.resources.getString(TAB_TITLES[position])
 
-    override fun getCount(): Int = 2
+    override fun getCount(): Int = TAB_TITLES.size
 }

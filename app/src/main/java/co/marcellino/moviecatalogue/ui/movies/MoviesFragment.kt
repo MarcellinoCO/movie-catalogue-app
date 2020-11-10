@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import co.marcellino.moviecatalogue.R
 import co.marcellino.moviecatalogue.model.Movie
-import co.marcellino.moviecatalogue.ui.catalogue.CatalogueListener
 import co.marcellino.moviecatalogue.ui.details.DetailsActivity
 import co.marcellino.moviecatalogue.viewmodel.CatalogueViewModel
 import co.marcellino.moviecatalogue.viewmodel.DetailsViewModel.Companion.TYPE_MOVIE
@@ -40,15 +39,13 @@ class MoviesFragment : Fragment() {
             viewModel.moviesList
         } else viewModel.getMoviesList(resources.openRawResource(R.raw.movies))
 
-        val movieCatalogueAdapter = MoviesCatalogueAdapter(object : CatalogueListener {
-            override fun movieClicked(movie: Movie) {
-                val intent = Intent(context, DetailsActivity::class.java).apply {
-                    putExtra(DetailsActivity.EXTRA_TYPE, TYPE_MOVIE)
-                    putExtra(DetailsActivity.EXTRA_ENTITY, movie)
-                }
-                startActivity(intent)
+        val movieCatalogueAdapter = MoviesCatalogueAdapter { movie ->
+            val intent = Intent(context, DetailsActivity::class.java).apply {
+                putExtra(DetailsActivity.EXTRA_TYPE, TYPE_MOVIE)
+                putExtra(DetailsActivity.EXTRA_ENTITY, movie)
             }
-        }).apply {
+            startActivity(intent)
+        }.apply {
             setMoviesList(moviesList)
         }
 

@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import co.marcellino.moviecatalogue.R
 import co.marcellino.moviecatalogue.model.Show
-import co.marcellino.moviecatalogue.ui.catalogue.CatalogueListener
 import co.marcellino.moviecatalogue.ui.details.DetailsActivity
 import co.marcellino.moviecatalogue.viewmodel.CatalogueViewModel
 import co.marcellino.moviecatalogue.viewmodel.DetailsViewModel.Companion.TYPE_SHOW
@@ -40,15 +39,13 @@ class ShowsFragment : Fragment() {
             viewModel.showsList
         } else viewModel.getShowsList(resources.openRawResource(R.raw.shows))
 
-        val showsCatalogueAdapter = ShowsCatalogueAdapter(object : CatalogueListener {
-            override fun showClicked(show: Show) {
-                val intent = Intent(context, DetailsActivity::class.java).apply {
-                    putExtra(DetailsActivity.EXTRA_TYPE, TYPE_SHOW)
-                    putExtra(DetailsActivity.EXTRA_ENTITY, show)
-                }
-                startActivity(intent)
+        val showsCatalogueAdapter = ShowsCatalogueAdapter { show ->
+            val intent = Intent(context, DetailsActivity::class.java).apply {
+                putExtra(DetailsActivity.EXTRA_TYPE, TYPE_SHOW)
+                putExtra(DetailsActivity.EXTRA_ENTITY, show)
             }
-        }).apply {
+            startActivity(intent)
+        }.apply {
             setShowsList(showsList)
         }
 

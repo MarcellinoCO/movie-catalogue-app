@@ -6,12 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import co.marcellino.moviecatalogue.R
 import co.marcellino.moviecatalogue.model.Movie
-import co.marcellino.moviecatalogue.ui.catalogue.CatalogueListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.item_catalogue.view.*
 
-class MoviesCatalogueAdapter(val listener: CatalogueListener) :
+class MoviesCatalogueAdapter(val listener: (Movie) -> Unit) :
     RecyclerView.Adapter<MoviesCatalogueAdapter.MovieHolder>() {
 
     private val listMovies = ArrayList<Movie>()
@@ -49,7 +48,7 @@ class MoviesCatalogueAdapter(val listener: CatalogueListener) :
                 ).into(iv_catalogue_poster)
 
                 setOnClickListener {
-                    listener.movieClicked(movie)
+                    listener(movie)
                 }
             }
         }
