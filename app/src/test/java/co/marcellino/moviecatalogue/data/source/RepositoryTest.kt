@@ -8,8 +8,7 @@ import co.marcellino.moviecatalogue.utils.LiveDataTestUtil
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.verify
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
+import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito
@@ -41,6 +40,19 @@ class RepositoryTest {
     }
 
     @Test
+    fun discoverMoviesError() {
+        doAnswer { invocationOnMock ->
+            (invocationOnMock.arguments[0] as RemoteDataSource.LoadMoviesCallback).onFailure()
+            null
+        }.`when`(remote).discoverMovies(any())
+
+        val movieEntities = LiveDataTestUtil.getValue(repository.discoverMovies())
+        verify(remote).discoverMovies(any())
+
+        assertNull(movieEntities)
+    }
+
+    @Test
     fun discoverShows() {
         doAnswer { invocationOnMock ->
             (invocationOnMock.arguments[0] as RemoteDataSource.LoadShowsCallback).onShowsReceived(
@@ -54,5 +66,18 @@ class RepositoryTest {
 
         assertNotNull(showEntities)
         assertEquals(showResponses.size, showEntities.size)
+    }
+
+    @Test
+    fun discoverShowsError() {
+        doAnswer { invocationOnMock ->
+            (invocationOnMock.arguments[0] as RemoteDataSource.LoadShowsCallback).onFailure()
+            null
+        }.`when`(remote).discoverShows(any())
+
+        val showEntities = LiveDataTestUtil.getValue(repository.discoverShows())
+        verify(remote).discoverShows(any())
+
+        assertNull(showEntities)
     }
 }

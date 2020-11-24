@@ -7,6 +7,7 @@ import co.marcellino.moviecatalogue.data.source.remote.response.movie.MovieIdRes
 import co.marcellino.moviecatalogue.data.source.remote.response.show.DiscoverShowResponse
 import co.marcellino.moviecatalogue.data.source.remote.response.show.ShowDetailsResponse
 import co.marcellino.moviecatalogue.data.source.remote.response.show.ShowSearchResponse
+import co.marcellino.moviecatalogue.utils.EspressoIdlingResource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,6 +26,8 @@ class RemoteDataSource private constructor() {
     }
 
     fun discoverMovies(callback: LoadMoviesCallback) {
+        EspressoIdlingResource.increment()
+
         val discoverMovieClient =
             ApiConfig.getApiService(ApiService.URL_TMDB).getDiscoverMovies(ApiService.API_KEY_TMDB)
         discoverMovieClient.enqueue(object : Callback<DiscoverMovieResponse> {
@@ -46,7 +49,7 @@ class RemoteDataSource private constructor() {
                     return
                 }
 
-                for (movieSummary in movieSummaryResponses) {
+                for ((index, movieSummary) in movieSummaryResponses.withIndex()) {
                     val movieIdClient = ApiConfig.getApiService(ApiService.URL_TMDB)
                         .getMovieImdbId(movieSummary.id, ApiService.API_KEY_TMDB)
                     movieIdClient.enqueue(object : Callback<MovieIdResponse> {
@@ -79,7 +82,10 @@ class RemoteDataSource private constructor() {
                                         response.body() as MovieDetailsResponse
                                     movieResponses.add(movieDetailsResponse)
 
-                                    callback.onMoviesReceived(movieResponses)
+                                    if (index == movieSummaryResponses.size - 1) {
+                                        callback.onMoviesReceived(movieResponses)
+                                        EspressoIdlingResource.decrement()
+                                    }
                                 }
 
                                 override fun onFailure(
@@ -108,6 +114,8 @@ class RemoteDataSource private constructor() {
     }
 
     fun discoverShows(callback: LoadShowsCallback) {
+        EspressoIdlingResource.increment()
+
         val discoverShowClient =
             ApiConfig.getApiService(ApiService.URL_TMDB).getDiscoverShows(ApiService.API_KEY_TMDB)
         discoverShowClient.enqueue(object : Callback<DiscoverShowResponse> {
@@ -129,7 +137,7 @@ class RemoteDataSource private constructor() {
                     return
                 }
 
-                for (showNameResponse in showNameResponses) {
+                for ((index, showNameResponse) in showNameResponses.withIndex()) {
                     val showSearchClient = ApiConfig.getApiService(ApiService.URL_OMDB)
                         .getShowSearch(ApiService.API_KEY_OMDB, showNameResponse.name)
                     showSearchClient.enqueue(object : Callback<ShowSearchResponse> {
@@ -161,7 +169,10 @@ class RemoteDataSource private constructor() {
                                     val showDetailsResponse = response.body() as ShowDetailsResponse
                                     showResponses.add(showDetailsResponse)
 
-                                    callback.onShowsReceived(showResponses)
+                                    if (index == showNameResponses.size - 1) {
+                                        callback.onShowsReceived(showResponses)
+                                        EspressoIdlingResource.decrement()
+                                    }
                                 }
 
                                 override fun onFailure(
