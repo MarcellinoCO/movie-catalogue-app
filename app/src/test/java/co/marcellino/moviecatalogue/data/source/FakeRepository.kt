@@ -9,17 +9,7 @@ import co.marcellino.moviecatalogue.data.source.remote.RemoteDataSource
 import co.marcellino.moviecatalogue.data.source.remote.response.movie.MovieDetailsResponse
 import co.marcellino.moviecatalogue.data.source.remote.response.show.ShowDetailsResponse
 
-class Repository private constructor(private val remoteDataSource: RemoteDataSource) : DataSource {
-
-    companion object {
-        @Volatile
-        private var instance: Repository? = null
-
-        fun getInstance(remoteDataSource: RemoteDataSource): Repository =
-            instance ?: synchronized(this) {
-                instance ?: Repository(remoteDataSource)
-            }
-    }
+class FakeRepository(private val remoteDataSource: RemoteDataSource) : DataSource {
 
     override fun discoverMovies(): LiveData<List<Movie>> {
         val movieResults = MutableLiveData<List<Movie>>()
@@ -31,7 +21,7 @@ class Repository private constructor(private val remoteDataSource: RemoteDataSou
                         title = movieResponse.title,
                         year = movieResponse.year,
                         posterPath = movieResponse.posterPath,
-                        rating = if (movieResponse.rating.isNotEmpty()) movieResponse.rating[0].rating else "N/A",
+                        rating = movieResponse.rating[0].rating,
                         runtime = movieResponse.runtime,
                         genre = movieResponse.genre,
                         plot = movieResponse.plot,
@@ -57,18 +47,18 @@ class Repository private constructor(private val remoteDataSource: RemoteDataSou
         remoteDataSource.discoverShows(object : RemoteDataSource.LoadShowsCallback {
             override fun onShowsReceived(showDetailsResponses: List<ShowDetailsResponse>) {
                 val showList = ArrayList<Show>()
-                for (showResponse in showDetailsResponses) {
+                for (movieResponse in showDetailsResponses) {
                     val show = Show(
-                        title = showResponse.title,
-                        year = showResponse.year,
-                        posterPath = showResponse.posterPath,
-                        rating = if (showResponse.rating.isNotEmpty()) showResponse.rating[0].rating else "N/A",
-                        runtime = showResponse.runtime,
-                        genre = showResponse.genre,
-                        plot = showResponse.plot,
-                        writer = showResponse.writer,
-                        actors = showResponse.actors,
-                        awards = showResponse.awards
+                        title = movieResponse.title,
+                        year = movieResponse.year,
+                        posterPath = movieResponse.posterPath,
+                        rating = movieResponse.rating[0].rating,
+                        runtime = movieResponse.runtime,
+                        genre = movieResponse.genre,
+                        plot = movieResponse.plot,
+                        writer = movieResponse.writer,
+                        actors = movieResponse.actors,
+                        awards = movieResponse.awards
                     )
                     showList.add(show)
                 }

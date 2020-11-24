@@ -1,7 +1,7 @@
 package co.marcellino.moviecatalogue.viewmodel
 
-import co.marcellino.moviecatalogue.model.Movie
-import co.marcellino.moviecatalogue.model.Show
+import co.marcellino.moviecatalogue.data.Movie
+import co.marcellino.moviecatalogue.data.Show
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
