@@ -7,13 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import co.marcellino.moviecatalogue.R
-import co.marcellino.moviecatalogue.model.Movie
+import co.marcellino.moviecatalogue.data.Movie
 import co.marcellino.moviecatalogue.ui.details.DetailsActivity
 import co.marcellino.moviecatalogue.viewmodel.CatalogueViewModel
 import co.marcellino.moviecatalogue.viewmodel.DetailsViewModel.Companion.TYPE_MOVIE
+import co.marcellino.moviecatalogue.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_movies.*
 
 class MoviesFragment : Fragment() {
@@ -30,24 +32,29 @@ class MoviesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel = ViewModelProvider(
-            requireActivity(),
-            ViewModelProvider.NewInstanceFactory()
-        )[CatalogueViewModel::class.java]
+        if (activity == null) return
 
-        moviesList = if (viewModel.isMoviesListInitialized()) {
-            viewModel.moviesList
-        } else viewModel.getMoviesList(resources.openRawResource(R.raw.movies))
+        val factory = ViewModelFactory.getInstance()
+        viewModel = ViewModelProvider(this, factory)[CatalogueViewModel::class.java]
 
-        val movieCatalogueAdapter = MoviesCatalogueAdapter { movie ->
+        val moviesCatalogueAdapter = MoviesCatalogueAdapter { movie ->
             val intent = Intent(context, DetailsActivity::class.java).apply {
                 putExtra(DetailsActivity.EXTRA_TYPE, TYPE_MOVIE)
                 putExtra(DetailsActivity.EXTRA_ENTITY, movie)
             }
             startActivity(intent)
-        }.apply {
-            setMoviesList(moviesList)
         }
+
+        pb_movies.visibility = View.VISIBLE
+        viewModel.loadMoviesList().observe(viewLifecycleOwner, Observer { movies ->
+            if (movies.isEmpty()) return@Observer
+
+            moviesList = movies
+            pb_movies.visibility = View.GONE
+
+            moviesCatalogueAdapter.setMoviesList(movies)
+            moviesCatalogueAdapter.notifyDataSetChanged()
+        })
 
         with(rv_movies) {
             val orientation = this@MoviesFragment.resources.configuration.orientation
@@ -57,7 +64,7 @@ class MoviesFragment : Fragment() {
                 StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL)
             setHasFixedSize(true)
 
-            adapter = movieCatalogueAdapter
+            adapter = moviesCatalogueAdapter
         }
     }
 }

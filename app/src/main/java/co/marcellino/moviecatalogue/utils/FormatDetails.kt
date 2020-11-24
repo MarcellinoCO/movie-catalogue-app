@@ -6,6 +6,8 @@ object FormatDetails {
         // Format of runtime is '### min'
         // Modify it to become '#h ##m'
 
+        if (runtime == "N/A") return ""
+
         val runtimeInt = runtime.split(' ')[0].toInt()
         val hour = runtimeInt / 60
         val minute = runtimeInt % 60

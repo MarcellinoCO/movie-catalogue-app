@@ -1,4 +1,4 @@
-package co.marcellino.moviecatalogue.model
+package co.marcellino.moviecatalogue.data
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
