@@ -8,10 +8,11 @@ This app is a project submission for [Dicoding's Belajar Android Jetpack Pro](ht
 - [x] Splash screen
 - [x] Catalogue screen
 - [x] Details screen
+- [x] Discover movies and TV shows
 
 ### Things I used in the project
 - Kotlin
-- [OMDb API](http://www.omdbapi.com) for movie and tv show data
+- [OMDb API](https://www.omdbapi.com) and [TMDd API](https://www.themoviedb.org/) for movie and tv show data
 - Model-View-ViewModel (MVVM) architecture
   - Fragment
   - Section pager
@@ -19,6 +20,10 @@ This app is a project submission for [Dicoding's Belajar Android Jetpack Pro](ht
 - Testing:
   - JUnit 4 for unit test
   - Espresso and AndroidX test for instrumentation test
+- Repository pattern:
+  - Dependency injection
+  - Android LiveData
+  - Retrofit
 
 ## Screenshots
 ![Catalogue screen](https://github.com/MarcellinoCO/movie-catalogue-app/blob/master/extra-files/screenshot-1.PNG)
