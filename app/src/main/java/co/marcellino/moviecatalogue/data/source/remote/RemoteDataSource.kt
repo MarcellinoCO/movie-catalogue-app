@@ -1,12 +1,12 @@
 package co.marcellino.moviecatalogue.data.source.remote
 
 import android.util.Log
-import co.marcellino.moviecatalogue.data.source.remote.response.details.MovieDetailsResponse
-import co.marcellino.moviecatalogue.data.source.remote.response.details.MovieIdResponse
-import co.marcellino.moviecatalogue.data.source.remote.response.details.ShowDetailsResponse
-import co.marcellino.moviecatalogue.data.source.remote.response.details.ShowSearchResponse
-import co.marcellino.moviecatalogue.data.source.remote.response.discover.DiscoverMovieResponse
-import co.marcellino.moviecatalogue.data.source.remote.response.discover.DiscoverShowResponse
+import co.marcellino.moviecatalogue.data.source.remote.response.movie.DiscoverMovieResponse
+import co.marcellino.moviecatalogue.data.source.remote.response.movie.MovieDetailsResponse
+import co.marcellino.moviecatalogue.data.source.remote.response.movie.MovieIdResponse
+import co.marcellino.moviecatalogue.data.source.remote.response.show.DiscoverShowResponse
+import co.marcellino.moviecatalogue.data.source.remote.response.show.ShowDetailsResponse
+import co.marcellino.moviecatalogue.data.source.remote.response.show.ShowSearchResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
