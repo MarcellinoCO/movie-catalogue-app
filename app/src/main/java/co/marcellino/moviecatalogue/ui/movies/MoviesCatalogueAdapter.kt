@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import co.marcellino.moviecatalogue.R
-import co.marcellino.moviecatalogue.model.Movie
+import co.marcellino.moviecatalogue.data.Movie
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.item_catalogue.view.*

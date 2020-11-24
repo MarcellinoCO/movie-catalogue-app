@@ -5,8 +5,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import co.marcellino.moviecatalogue.R
-import co.marcellino.moviecatalogue.model.Movie
-import co.marcellino.moviecatalogue.model.Show
+import co.marcellino.moviecatalogue.data.Movie
+import co.marcellino.moviecatalogue.data.Show
 import co.marcellino.moviecatalogue.utils.FormatDetails.getCastsFormat
 import co.marcellino.moviecatalogue.utils.FormatDetails.getGenreFormat
 import co.marcellino.moviecatalogue.utils.FormatDetails.getRuntimeFormat

@@ -1,8 +1,8 @@
 package co.marcellino.moviecatalogue.viewmodel
 
 import androidx.lifecycle.ViewModel
-import co.marcellino.moviecatalogue.model.Movie
-import co.marcellino.moviecatalogue.model.Show
+import co.marcellino.moviecatalogue.data.Movie
+import co.marcellino.moviecatalogue.data.Show
 
 class DetailsViewModel : ViewModel() {
 
