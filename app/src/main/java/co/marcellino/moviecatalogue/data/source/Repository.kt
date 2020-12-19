@@ -46,7 +46,9 @@ class Repository private constructor(private val remoteDataSource: RemoteDataSou
                 movieResults.postValue(movieList)
             }
 
-            override fun onFailure() {}
+            override fun onFailure() {
+                Log.e("Repository Error", "")
+            }
         })
 
         return movieResults

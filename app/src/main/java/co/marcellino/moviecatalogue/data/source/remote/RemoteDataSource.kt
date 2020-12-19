@@ -38,6 +38,8 @@ class RemoteDataSource private constructor() {
                 if (!response.isSuccessful) {
                     Log.e(TAG, response.message())
                     callback.onFailure()
+
+                    EspressoIdlingResource.decrement()
                     return
                 }
 
@@ -46,6 +48,8 @@ class RemoteDataSource private constructor() {
 
                 if (movieSummaryResponses == null) {
                     callback.onMoviesReceived(movieResponses)
+
+                    EspressoIdlingResource.decrement()
                     return
                 }
 
@@ -60,6 +64,8 @@ class RemoteDataSource private constructor() {
                             if (!response.isSuccessful) {
                                 Log.e(TAG, response.message())
                                 callback.onFailure()
+
+                                EspressoIdlingResource.decrement()
                                 return
                             }
 
@@ -75,6 +81,8 @@ class RemoteDataSource private constructor() {
                                     if (!response.isSuccessful) {
                                         Log.e(TAG, response.message())
                                         callback.onFailure()
+
+                                        EspressoIdlingResource.decrement()
                                         return
                                     }
 
@@ -94,6 +102,7 @@ class RemoteDataSource private constructor() {
                                 ) {
                                     Log.e(TAG, t.message.toString())
                                     callback.onFailure()
+                                    EspressoIdlingResource.decrement()
                                 }
                             })
                         }
@@ -101,6 +110,7 @@ class RemoteDataSource private constructor() {
                         override fun onFailure(call: Call<MovieIdResponse>, t: Throwable) {
                             Log.e(TAG, t.message.toString())
                             callback.onFailure()
+                            EspressoIdlingResource.decrement()
                         }
                     })
                 }
@@ -109,6 +119,7 @@ class RemoteDataSource private constructor() {
             override fun onFailure(call: Call<DiscoverMovieResponse>, t: Throwable) {
                 Log.e(TAG, t.message.toString())
                 callback.onFailure()
+                EspressoIdlingResource.decrement()
             }
         })
     }
@@ -126,6 +137,8 @@ class RemoteDataSource private constructor() {
                 if (!response.isSuccessful) {
                     Log.e(TAG, response.message())
                     callback.onFailure()
+
+                    EspressoIdlingResource.decrement()
                     return
                 }
 
@@ -134,6 +147,8 @@ class RemoteDataSource private constructor() {
 
                 if (showNameResponses == null) {
                     callback.onShowsReceived(showResponses)
+
+                    EspressoIdlingResource.decrement()
                     return
                 }
 
@@ -148,6 +163,8 @@ class RemoteDataSource private constructor() {
                             if (!response.isSuccessful) {
                                 Log.e(TAG, response.message())
                                 callback.onFailure()
+
+                                EspressoIdlingResource.decrement()
                                 return
                             }
 
@@ -163,6 +180,8 @@ class RemoteDataSource private constructor() {
                                     if (!response.isSuccessful) {
                                         Log.e(TAG, response.message())
                                         callback.onFailure()
+
+                                        EspressoIdlingResource.decrement()
                                         return
                                     }
 
@@ -181,6 +200,7 @@ class RemoteDataSource private constructor() {
                                 ) {
                                     Log.e(TAG, t.message.toString())
                                     callback.onFailure()
+                                    EspressoIdlingResource.decrement()
                                 }
                             })
                         }
@@ -188,6 +208,7 @@ class RemoteDataSource private constructor() {
                         override fun onFailure(call: Call<ShowSearchResponse>, t: Throwable) {
                             Log.e(TAG, t.message.toString())
                             callback.onFailure()
+                            EspressoIdlingResource.decrement()
                         }
                     })
                 }
@@ -196,6 +217,7 @@ class RemoteDataSource private constructor() {
             override fun onFailure(call: Call<DiscoverShowResponse>, t: Throwable) {
                 Log.e(TAG, t.message.toString())
                 callback.onFailure()
+                EspressoIdlingResource.decrement()
             }
         })
     }

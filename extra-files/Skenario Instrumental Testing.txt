@@ -5,12 +5,12 @@ Skenario instrumental testing:
 
 2. Menampilkan data Movie Details
 	Memberi click pada data pertama 'rv_movies'.
-	Memastikan TextView dari 'tv_details_title' sesuai.
+	Memastikan TextView dari 'tv_details_title' tampil.
 	Memastikan ImageView 'iv_details_poster' tampil.
 
 3. Melakukan back press pada Movie Details.
 	Memberi click pada data pertama 'rv_movies'.
-	Memastikan TextView dari 'tv_details_title' sesuai.
+	Memastikan TextView dari 'tv_details_title' tampil.
 	Memastikan ImageView 'iv_details_poster' tampil.
 	Melakukan back press.
 	Memastikan RecylerView 'rv_movies' tampil.
@@ -22,12 +22,12 @@ Skenario instrumental testing:
 
 5. Menampilkan data TV Shows Details
 	Memberi click pada data pertama 'rv_shows'.
-	Memastikan TextView dari 'tv_details_title' sesuai.
+	Memastikan TextView dari 'tv_details_title' tampil.
 	Memastikan ImageView 'iv_details_poster' tampil.
 
 3. Melakukan back press pada TV Shows Details.
 	Memberi click pada data pertama 'rv_shows'.
-	Memastikan TextView dari 'tv_details_title' sesuai.
+	Memastikan TextView dari 'tv_details_title' tampil.
 	Memastikan ImageView 'iv_details_poster' tampil.
 	Melakukan back press.
 	Memastikan RecylerView 'rv_shows' tampil.
