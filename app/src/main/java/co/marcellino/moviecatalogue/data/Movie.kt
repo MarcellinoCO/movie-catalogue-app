@@ -19,4 +19,7 @@ data class Movie(
     val writer: String = "",
     val actors: String = "",
     val awards: String = ""
-) : Parcelable
+) : Parcelable {
+
+    fun isEmpty(): Boolean = (title == "")
+}

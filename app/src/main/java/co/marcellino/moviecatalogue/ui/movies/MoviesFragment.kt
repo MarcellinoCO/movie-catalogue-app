@@ -49,10 +49,15 @@ class MoviesFragment : Fragment() {
         viewModel.loadMoviesList().observe(viewLifecycleOwner, Observer { movies ->
             if (movies.isEmpty()) return@Observer
 
-            moviesList = movies
+            val validMovies = ArrayList<Movie>()
+            for (movie in movies) {
+                if (!movie.isEmpty()) validMovies.add(movie)
+            }
+
+            moviesList = validMovies
             pb_movies.visibility = View.GONE
 
-            moviesCatalogueAdapter.setMoviesList(movies)
+            moviesCatalogueAdapter.setMoviesList(validMovies)
             moviesCatalogueAdapter.notifyDataSetChanged()
         })
 

@@ -26,7 +26,8 @@
 
         <activity
             android:name=".ui.catalogue.CatalogueActivity"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".ui.SplashScreenActivity"

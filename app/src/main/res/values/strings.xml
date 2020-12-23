@@ -17,4 +17,7 @@
 
     <string name="cd_logo">Logo</string>
     <string name="cd_poster">Movie poster</string>
+
+    <string name="menu_favorites">Favorites</string>
+
 </resources>
