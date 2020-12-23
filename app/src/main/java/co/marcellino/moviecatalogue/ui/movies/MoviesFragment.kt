@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -16,6 +17,7 @@ import co.marcellino.moviecatalogue.ui.details.DetailsActivity
 import co.marcellino.moviecatalogue.viewmodel.CatalogueViewModel
 import co.marcellino.moviecatalogue.viewmodel.DetailsViewModel.Companion.TYPE_MOVIE
 import co.marcellino.moviecatalogue.viewmodel.ViewModelFactory
+import co.marcellino.moviecatalogue.vo.Status
 import kotlinx.android.synthetic.main.fragment_movies.*
 
 class MoviesFragment : Fragment() {
@@ -34,7 +36,7 @@ class MoviesFragment : Fragment() {
 
         if (activity == null) return
 
-        val factory = ViewModelFactory.getInstance()
+        val factory = ViewModelFactory.getInstance(requireActivity())
         viewModel = ViewModelProvider(this, factory)[CatalogueViewModel::class.java]
 
         val moviesCatalogueAdapter = MoviesCatalogueAdapter { movie ->
@@ -45,20 +47,30 @@ class MoviesFragment : Fragment() {
             startActivity(intent)
         }
 
-        pb_movies.visibility = View.VISIBLE
         viewModel.loadMoviesList().observe(viewLifecycleOwner, Observer { movies ->
-            if (movies.isEmpty()) return@Observer
+            if (movies.data == null) return@Observer
 
-            val validMovies = ArrayList<Movie>()
-            for (movie in movies) {
-                if (!movie.isEmpty()) validMovies.add(movie)
+            when (movies.status) {
+                Status.LOADING -> pb_movies.visibility = View.VISIBLE
+                Status.SUCESS -> {
+                    pb_movies.visibility = View.GONE
+
+                    val validMovies = ArrayList<Movie>()
+                    for (movie in movies.data) {
+                        if (!movie.isEmpty()) validMovies.add(movie)
+                    }
+
+                    moviesList = validMovies
+                    pb_movies.visibility = View.GONE
+
+                    moviesCatalogueAdapter.setMoviesList(validMovies)
+                    moviesCatalogueAdapter.notifyDataSetChanged()
+                }
+                Status.ERROR -> {
+                    pb_movies.visibility = View.GONE
+                    Toast.makeText(context, "An Error Occurred", Toast.LENGTH_SHORT).show()
+                }
             }
-
-            moviesList = validMovies
-            pb_movies.visibility = View.GONE
-
-            moviesCatalogueAdapter.setMoviesList(validMovies)
-            moviesCatalogueAdapter.notifyDataSetChanged()
         })
 
         with(rv_movies) {

@@ -8,21 +8,33 @@ import co.marcellino.moviecatalogue.data.Show
 @Dao
 interface CatalogueDao {
 
+    @Query("SELECT * FROM movie")
+    fun getMovies(): LiveData<List<Movie>>
+
     @Query("SELECT * FROM movie WHERE isFavorite = 1")
     fun getFavoriteMovies(): LiveData<List<Movie>>
+
+    @Query("SELECT * FROM show")
+    fun getShows(): LiveData<List<Show>>
 
     @Query("SELECT * FROM show WHERE isFavorite = 1")
     fun getFavoriteShows(): LiveData<List<Show>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertFavoriteMovies(movies: List<Movie>)
+    fun insertMovies(movies: List<Movie>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertFavoriteShows(shows: List<Show>)
+    fun insertShows(shows: List<Show>)
+
+    @Update
+    fun updateMovie(movie: Movie)
+
+    @Update
+    fun updateShow(show: Show)
 
     @Delete
-    fun deleteFavoriteMovie(movie: Movie)
+    fun deleteMovie(movie: Movie)
 
     @Delete
-    fun deleteFavoriteShow(show: Show)
+    fun deleteShow(show: Show)
 }

@@ -1,5 +1,6 @@
 package co.marcellino.moviecatalogue.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import co.marcellino.moviecatalogue.data.source.Repository
@@ -12,9 +13,10 @@ class ViewModelFactory private constructor(private val repository: Repository) :
         @Volatile
         private var instance: ViewModelFactory? = null
 
-        fun getInstance(): ViewModelFactory = instance ?: synchronized(this) {
-            instance ?: ViewModelFactory(Injection.provideRepository())
-        }
+        fun getInstance(context: Context): ViewModelFactory =
+            instance ?: synchronized(this) {
+                instance ?: ViewModelFactory(Injection.provideRepository(context))
+            }
     }
 
     @Suppress("UNCHECKED_CAST")

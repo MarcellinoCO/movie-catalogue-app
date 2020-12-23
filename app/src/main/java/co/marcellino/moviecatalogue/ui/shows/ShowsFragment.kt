@@ -34,7 +34,7 @@ class ShowsFragment : Fragment() {
 
         if (activity == null) return
 
-        val factory = ViewModelFactory.getInstance()
+        val factory = ViewModelFactory.getInstance(requireActivity())
         viewModel = ViewModelProvider(this, factory)[CatalogueViewModel::class.java]
 
         val showsCatalogueAdapter = ShowsCatalogueAdapter { show ->
@@ -47,12 +47,12 @@ class ShowsFragment : Fragment() {
 
         pb_shows.visibility = View.VISIBLE
         viewModel.loadShowsList().observe(viewLifecycleOwner, Observer { shows ->
-            if (shows.isEmpty()) return@Observer
+            if (shows.data == null || shows.data.isEmpty()) return@Observer
 
-            showsList = shows
+            showsList = shows.data
             pb_shows.visibility = View.GONE
 
-            showsCatalogueAdapter.setShowsList(shows)
+            showsCatalogueAdapter.setShowsList(shows.data)
             showsCatalogueAdapter.notifyDataSetChanged()
         })
 
