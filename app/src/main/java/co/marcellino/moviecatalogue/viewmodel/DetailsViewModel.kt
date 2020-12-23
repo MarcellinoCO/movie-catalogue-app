@@ -3,8 +3,9 @@ package co.marcellino.moviecatalogue.viewmodel
 import androidx.lifecycle.ViewModel
 import co.marcellino.moviecatalogue.data.Movie
 import co.marcellino.moviecatalogue.data.Show
+import co.marcellino.moviecatalogue.data.source.Repository
 
-class DetailsViewModel : ViewModel() {
+class DetailsViewModel(private val repository: Repository) : ViewModel() {
 
     companion object {
         const val TYPE_UNINITIALIZED = -1
@@ -20,4 +21,14 @@ class DetailsViewModel : ViewModel() {
 
     lateinit var show: Show
     fun isShowInitialized(): Boolean = this::show.isInitialized
+
+    fun toggleFavorite() {
+        if (type == TYPE_MOVIE) {
+            repository.setMovieFavorite(movie, !movie.isFavorite)
+            movie.isFavorite = !movie.isFavorite
+        } else if (type == TYPE_SHOW) {
+            repository.setShowFavorite(show, !show.isFavorite)
+            show.isFavorite = !show.isFavorite
+        }
+    }
 }

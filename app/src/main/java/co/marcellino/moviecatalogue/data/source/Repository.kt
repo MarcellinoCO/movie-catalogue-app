@@ -95,9 +95,11 @@ class Repository private constructor(
     override fun getFavoriteShows(): LiveData<List<Show>> =
         localDataSource.getFavoriteShows()
 
-    override fun setMovieFavorite(movie: Movie, isFavorite: Boolean) =
-        localDataSource.setMovieFavorite(movie, isFavorite)
+    override fun setMovieFavorite(movie: Movie, isFavorite: Boolean) {
+        appExecutors.diskIO().execute { localDataSource.setMovieFavorite(movie, isFavorite) }
+    }
 
-    override fun setShowFavorite(show: Show, isFavorite: Boolean) =
-        localDataSource.setShowFavorite(show, isFavorite)
+    override fun setShowFavorite(show: Show, isFavorite: Boolean) {
+        appExecutors.diskIO().execute { localDataSource.setShowFavorite(show, isFavorite) }
+    }
 }
