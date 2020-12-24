@@ -89,11 +89,30 @@ class Repository private constructor(
             }
         }.asLiveData()
 
-    override fun getFavoriteMovies(): LiveData<List<Movie>> =
-        localDataSource.getFavoriteMovies()
+    override fun getFavoriteMovies(): LiveData<Resource<List<Movie>>> =
+        object : NetworkBoundResource<List<Movie>, List<MovieDetailsResponse>>(appExecutors) {
+            override fun loadFromDb(): LiveData<List<Movie>> = localDataSource.getFavoriteMovies()
 
-    override fun getFavoriteShows(): LiveData<List<Show>> =
-        localDataSource.getFavoriteShows()
+            override fun shouldFetch(data: List<Movie>?): Boolean = false
+
+            override fun createCall(): LiveData<ApiResponse<List<MovieDetailsResponse>>> =
+                remoteDataSource.discoverMovies2()
+
+            override fun saveCallResult(data: List<MovieDetailsResponse>) {}
+        }.asLiveData()
+
+
+    override fun getFavoriteShows(): LiveData<Resource<List<Show>>> =
+        object : NetworkBoundResource<List<Show>, List<ShowDetailsResponse>>(appExecutors) {
+            override fun loadFromDb(): LiveData<List<Show>> = localDataSource.getFavoriteShows()
+
+            override fun shouldFetch(data: List<Show>?): Boolean = false
+
+            override fun createCall(): LiveData<ApiResponse<List<ShowDetailsResponse>>> =
+                remoteDataSource.discoverShows2()
+
+            override fun saveCallResult(data: List<ShowDetailsResponse>) {}
+        }.asLiveData()
 
     override fun setMovieFavorite(movie: Movie, isFavorite: Boolean) {
         appExecutors.diskIO().execute { localDataSource.setMovieFavorite(movie, isFavorite) }

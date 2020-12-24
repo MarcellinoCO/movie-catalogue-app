@@ -25,6 +25,9 @@ class ViewModelFactory private constructor(private val repository: Repository) :
             modelClass.isAssignableFrom(CatalogueViewModel::class.java) -> {
                 CatalogueViewModel(repository) as T
             }
+            modelClass.isAssignableFrom(FavoritesViewModel::class.java) -> {
+                FavoritesViewModel(repository) as T
+            }
             modelClass.isAssignableFrom(DetailsViewModel::class.java) -> {
                 DetailsViewModel(repository) as T
             }

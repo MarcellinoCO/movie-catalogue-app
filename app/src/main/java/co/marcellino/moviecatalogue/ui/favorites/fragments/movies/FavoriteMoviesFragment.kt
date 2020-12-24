@@ -1,4 +1,4 @@
-package co.marcellino.moviecatalogue.ui.movies
+package co.marcellino.moviecatalogue.ui.favorites.fragments.movies
 
 import android.content.Intent
 import android.content.res.Configuration
@@ -14,18 +14,18 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import co.marcellino.moviecatalogue.R
 import co.marcellino.moviecatalogue.data.Movie
 import co.marcellino.moviecatalogue.ui.details.DetailsActivity
-import co.marcellino.moviecatalogue.viewmodel.CatalogueViewModel
-import co.marcellino.moviecatalogue.viewmodel.DetailsViewModel.Companion.TYPE_MOVIE
+import co.marcellino.moviecatalogue.viewmodel.DetailsViewModel
+import co.marcellino.moviecatalogue.viewmodel.FavoritesViewModel
 import co.marcellino.moviecatalogue.viewmodel.ViewModelFactory
 import co.marcellino.moviecatalogue.vo.Status
 import kotlinx.android.synthetic.main.fragment_movies.*
 
-class MoviesFragment : Fragment() {
+class FavoriteMoviesFragment : Fragment() {
 
-    private lateinit var viewModel: CatalogueViewModel
+    private lateinit var viewModel: FavoritesViewModel
     private lateinit var moviesList: List<Movie>
 
-    private lateinit var moviesCatalogueAdapter: MoviesCatalogueAdapter
+    private lateinit var moviesCatalogueAdapter: FavoriteMoviesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,18 +39,18 @@ class MoviesFragment : Fragment() {
         if (activity == null) return
 
         val factory = ViewModelFactory.getInstance(requireActivity())
-        viewModel = ViewModelProvider(this, factory)[CatalogueViewModel::class.java]
+        viewModel = ViewModelProvider(this, factory)[FavoritesViewModel::class.java]
 
-        moviesCatalogueAdapter = MoviesCatalogueAdapter { movie ->
+        moviesCatalogueAdapter = FavoriteMoviesAdapter { movie ->
             val intent = Intent(context, DetailsActivity::class.java).apply {
-                putExtra(DetailsActivity.EXTRA_TYPE, TYPE_MOVIE)
+                putExtra(DetailsActivity.EXTRA_TYPE, DetailsViewModel.TYPE_MOVIE)
                 putExtra(DetailsActivity.EXTRA_ENTITY, movie)
             }
             startActivity(intent)
         }
 
         with(rv_movies) {
-            val orientation = this@MoviesFragment.resources.configuration.orientation
+            val orientation = this@FavoriteMoviesFragment.resources.configuration.orientation
             val spanCount = if (orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 3
 
             layoutManager =
@@ -65,7 +65,7 @@ class MoviesFragment : Fragment() {
         super.onResume()
 
         viewModel.loadMoviesList().observe(viewLifecycleOwner, Observer { movies ->
-            if (movies.data == null) return@Observer
+            if (movies?.data == null) return@Observer
 
             when (movies.status) {
                 Status.LOADING -> pb_movies.visibility = View.VISIBLE

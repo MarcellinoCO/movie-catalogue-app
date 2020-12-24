@@ -26,4 +26,7 @@ data class Show(
     val awards: String = "",
 
     var isFavorite: Boolean = false
-) : Parcelable
+) : Parcelable {
+
+    fun isEmpty(): Boolean = (title == "")
+}

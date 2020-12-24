@@ -1,4 +1,4 @@
-package co.marcellino.moviecatalogue.ui.shows
+package co.marcellino.moviecatalogue.ui.favorites.fragments.shows
 
 import android.content.Intent
 import android.content.res.Configuration
@@ -14,18 +14,18 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import co.marcellino.moviecatalogue.R
 import co.marcellino.moviecatalogue.data.Show
 import co.marcellino.moviecatalogue.ui.details.DetailsActivity
-import co.marcellino.moviecatalogue.viewmodel.CatalogueViewModel
-import co.marcellino.moviecatalogue.viewmodel.DetailsViewModel.Companion.TYPE_SHOW
+import co.marcellino.moviecatalogue.viewmodel.DetailsViewModel
+import co.marcellino.moviecatalogue.viewmodel.FavoritesViewModel
 import co.marcellino.moviecatalogue.viewmodel.ViewModelFactory
 import co.marcellino.moviecatalogue.vo.Status
 import kotlinx.android.synthetic.main.fragment_shows.*
 
-class ShowsFragment : Fragment() {
+class FavoriteShowsFragment : Fragment() {
 
-    private lateinit var viewModel: CatalogueViewModel
+    private lateinit var viewModel: FavoritesViewModel
     private lateinit var showsList: List<Show>
 
-    private lateinit var showsCatalogueAdapter: ShowsCatalogueAdapter
+    private lateinit var showsCatalogueAdapter: FavoriteShowsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,29 +39,18 @@ class ShowsFragment : Fragment() {
         if (activity == null) return
 
         val factory = ViewModelFactory.getInstance(requireActivity())
-        viewModel = ViewModelProvider(this, factory)[CatalogueViewModel::class.java]
+        viewModel = ViewModelProvider(this, factory)[FavoritesViewModel::class.java]
 
-        showsCatalogueAdapter = ShowsCatalogueAdapter { show ->
+        showsCatalogueAdapter = FavoriteShowsAdapter { show ->
             val intent = Intent(context, DetailsActivity::class.java).apply {
-                putExtra(DetailsActivity.EXTRA_TYPE, TYPE_SHOW)
+                putExtra(DetailsActivity.EXTRA_TYPE, DetailsViewModel.TYPE_SHOW)
                 putExtra(DetailsActivity.EXTRA_ENTITY, show)
             }
             startActivity(intent)
         }
 
-        pb_shows.visibility = View.VISIBLE
-        viewModel.loadShowsList().observe(viewLifecycleOwner, Observer { shows ->
-            if (shows.data == null || shows.data.isEmpty()) return@Observer
-
-            showsList = shows.data
-            pb_shows.visibility = View.GONE
-
-            showsCatalogueAdapter.setShowsList(shows.data)
-            showsCatalogueAdapter.notifyDataSetChanged()
-        })
-
         with(rv_shows) {
-            val orientation = this@ShowsFragment.resources.configuration.orientation
+            val orientation = this@FavoriteShowsFragment.resources.configuration.orientation
             val spanCount = if (orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 3
 
             layoutManager =
@@ -76,7 +65,7 @@ class ShowsFragment : Fragment() {
         super.onResume()
 
         viewModel.loadShowsList().observe(viewLifecycleOwner, Observer { shows ->
-            if (shows.data == null) return@Observer
+            if (shows?.data == null) return@Observer
 
             when (shows.status) {
                 Status.LOADING -> pb_shows.visibility = View.VISIBLE
