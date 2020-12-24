@@ -1,6 +1,6 @@
 package co.marcellino.moviecatalogue.data.source.local.room
 
-import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import androidx.room.*
 import co.marcellino.moviecatalogue.data.Movie
 import co.marcellino.moviecatalogue.data.Show
@@ -8,17 +8,29 @@ import co.marcellino.moviecatalogue.data.Show
 @Dao
 interface CatalogueDao {
 
+//    @Query("SELECT * FROM movie")
+//    fun getMovies(): LiveData<List<Movie>>
+
     @Query("SELECT * FROM movie")
-    fun getMovies(): LiveData<List<Movie>>
+    fun getMovies(): DataSource.Factory<Int, Movie>
+
+//    @Query("SELECT * FROM movie WHERE isFavorite = 1")
+//    fun getFavoriteMovies(): LiveData<List<Movie>>
 
     @Query("SELECT * FROM movie WHERE isFavorite = 1")
-    fun getFavoriteMovies(): LiveData<List<Movie>>
+    fun getFavoriteMovies(): DataSource.Factory<Int, Movie>
+
+//    @Query("SELECT * FROM show")
+//    fun getShows(): LiveData<List<Show>>
 
     @Query("SELECT * FROM show")
-    fun getShows(): LiveData<List<Show>>
+    fun getShows(): DataSource.Factory<Int, Show>
+
+//    @Query("SELECT * FROM show WHERE isFavorite = 1")
+//    fun getFavoriteShows(): LiveData<List<Show>>
 
     @Query("SELECT * FROM show WHERE isFavorite = 1")
-    fun getFavoriteShows(): LiveData<List<Show>>
+    fun getFavoriteShows(): DataSource.Factory<Int, Show>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovies(movies: List<Movie>)

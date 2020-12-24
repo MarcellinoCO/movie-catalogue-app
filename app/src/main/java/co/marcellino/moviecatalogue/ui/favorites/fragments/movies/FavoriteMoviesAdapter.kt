@@ -3,6 +3,8 @@ package co.marcellino.moviecatalogue.ui.favorites.fragments.movies
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import co.marcellino.moviecatalogue.R
 import co.marcellino.moviecatalogue.data.Movie
@@ -11,7 +13,17 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.item_catalogue.view.*
 
 class FavoriteMoviesAdapter(val listener: (Movie) -> Unit) :
-    RecyclerView.Adapter<FavoriteMoviesAdapter.MovieHolder>() {
+    PagedListAdapter<Movie, FavoriteMoviesAdapter.MovieHolder>(DIFF_CALLBACK) {
+
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {
+            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean =
+                oldItem.title == newItem.title
+
+            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean =
+                oldItem == newItem
+        }
+    }
 
     private val listMovies = ArrayList<Movie>()
     fun setMoviesList(newListMovies: List<Movie>?) {

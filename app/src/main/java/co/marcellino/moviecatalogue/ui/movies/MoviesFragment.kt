@@ -55,7 +55,6 @@ class MoviesFragment : Fragment() {
 
             layoutManager =
                 StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL)
-            setHasFixedSize(true)
 
             adapter = moviesCatalogueAdapter
         }
@@ -72,16 +71,18 @@ class MoviesFragment : Fragment() {
                 Status.SUCESS -> {
                     pb_movies.visibility = View.GONE
 
-                    val validMovies = ArrayList<Movie>()
-                    for (movie in movies.data) {
-                        if (!movie.isEmpty()) validMovies.add(movie)
-                    }
+                    moviesCatalogueAdapter.submitList(movies.data)
 
-                    moviesList = validMovies
-                    pb_movies.visibility = View.GONE
-
-                    moviesCatalogueAdapter.setMoviesList(validMovies)
-                    moviesCatalogueAdapter.notifyDataSetChanged()
+//                    val validMovies = ArrayList<Movie>()
+//                    for (movie in movies.data) {
+//                        if (!movie.isEmpty()) validMovies.add(movie)
+//                    }
+//
+//                    moviesList = validMovies
+//                    pb_movies.visibility = View.GONE
+//
+//                    moviesCatalogueAdapter.setMoviesList(validMovies)
+//                    moviesCatalogueAdapter.notifyDataSetChanged()
 
                     if (movies.data.isEmpty()) tv_movies_empty.visibility = View.VISIBLE
                     else tv_movies_empty.visibility = View.GONE

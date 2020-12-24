@@ -49,24 +49,12 @@ class ShowsFragment : Fragment() {
             startActivity(intent)
         }
 
-        pb_shows.visibility = View.VISIBLE
-        viewModel.loadShowsList().observe(viewLifecycleOwner, Observer { shows ->
-            if (shows.data == null || shows.data.isEmpty()) return@Observer
-
-            showsList = shows.data
-            pb_shows.visibility = View.GONE
-
-            showsCatalogueAdapter.setShowsList(shows.data)
-            showsCatalogueAdapter.notifyDataSetChanged()
-        })
-
         with(rv_shows) {
             val orientation = this@ShowsFragment.resources.configuration.orientation
             val spanCount = if (orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 3
 
             layoutManager =
                 StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL)
-            setHasFixedSize(true)
 
             adapter = showsCatalogueAdapter
         }
@@ -83,16 +71,18 @@ class ShowsFragment : Fragment() {
                 Status.SUCESS -> {
                     pb_shows.visibility = View.GONE
 
-                    val validShows = ArrayList<Show>()
-                    for (show in shows.data) {
-                        if (!show.isEmpty()) validShows.add(show)
-                    }
+                    showsCatalogueAdapter.submitList(shows.data)
 
-                    showsList = validShows
-                    pb_shows.visibility = View.GONE
-
-                    showsCatalogueAdapter.setShowsList(validShows)
-                    showsCatalogueAdapter.notifyDataSetChanged()
+//                    val validShows = ArrayList<Show>()
+//                    for (show in shows.data) {
+//                        if (!show.isEmpty()) validShows.add(show)
+//                    }
+//
+//                    showsList = validShows
+//                    pb_shows.visibility = View.GONE
+//
+//                    showsCatalogueAdapter.setShowsList(validShows)
+//                    showsCatalogueAdapter.notifyDataSetChanged()
 
                     if (shows.data.isEmpty()) tv_shows_empty.visibility = View.VISIBLE
                     else tv_shows_empty.visibility = View.GONE

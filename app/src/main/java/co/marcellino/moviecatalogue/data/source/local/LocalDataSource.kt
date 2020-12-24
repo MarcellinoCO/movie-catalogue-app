@@ -1,6 +1,6 @@
 package co.marcellino.moviecatalogue.data.source.local
 
-import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import co.marcellino.moviecatalogue.data.Movie
 import co.marcellino.moviecatalogue.data.Show
 import co.marcellino.moviecatalogue.data.source.local.room.CatalogueDao
@@ -14,13 +14,13 @@ class LocalDataSource private constructor(private val catalogueDao: CatalogueDao
             INSTANCE ?: LocalDataSource(catalogueDao)
     }
 
-    fun getMovies(): LiveData<List<Movie>> = catalogueDao.getMovies()
+    fun getMovies(): DataSource.Factory<Int, Movie> = catalogueDao.getMovies()
 
-    fun getFavoriteMovies(): LiveData<List<Movie>> = catalogueDao.getFavoriteMovies()
+    fun getFavoriteMovies(): DataSource.Factory<Int, Movie> = catalogueDao.getFavoriteMovies()
 
-    fun getShows(): LiveData<List<Show>> = catalogueDao.getShows()
+    fun getShows(): DataSource.Factory<Int, Show> = catalogueDao.getShows()
 
-    fun getFavoriteShows(): LiveData<List<Show>> = catalogueDao.getFavoriteShows()
+    fun getFavoriteShows(): DataSource.Factory<Int, Show> = catalogueDao.getFavoriteShows()
 
     fun insertMovies(movies: List<Movie>) = catalogueDao.insertMovies(movies)
 

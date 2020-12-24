@@ -3,6 +3,8 @@ package co.marcellino.moviecatalogue.ui.shows
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import co.marcellino.moviecatalogue.R
 import co.marcellino.moviecatalogue.data.Show
@@ -11,7 +13,17 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.item_catalogue.view.*
 
 class ShowsCatalogueAdapter(val listener: (Show) -> Unit) :
-    RecyclerView.Adapter<ShowsCatalogueAdapter.ShowHolder>() {
+    PagedListAdapter<Show, ShowsCatalogueAdapter.ShowHolder>(DIFF_CALLBACK) {
+
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Show>() {
+            override fun areItemsTheSame(oldItem: Show, newItem: Show): Boolean =
+                oldItem.title == newItem.title
+
+            override fun areContentsTheSame(oldItem: Show, newItem: Show): Boolean =
+                oldItem == newItem
+        }
+    }
 
     private val listShows = ArrayList<Show>()
     fun setShowsList(newListShows: List<Show>?) {
@@ -28,11 +40,9 @@ class ShowsCatalogueAdapter(val listener: (Show) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: ShowHolder, position: Int) {
-        val show = listShows[position]
+        val show = getItem(position) ?: Show()
         holder.bind(show)
     }
-
-    override fun getItemCount(): Int = listShows.size
 
     inner class ShowHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(show: Show) {

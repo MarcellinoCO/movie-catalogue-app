@@ -1,6 +1,8 @@
 package co.marcellino.moviecatalogue.data.source
 
 import androidx.lifecycle.LiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import co.marcellino.moviecatalogue.data.Movie
 import co.marcellino.moviecatalogue.data.NetworkBoundResource
 import co.marcellino.moviecatalogue.data.Show
@@ -32,12 +34,19 @@ class Repository private constructor(
             }
     }
 
-    override fun discoverMovies(): LiveData<Resource<List<Movie>>> =
-        object : NetworkBoundResource<List<Movie>, List<MovieDetailsResponse>>(appExecutors) {
+    override fun discoverMovies(): LiveData<Resource<PagedList<Movie>>> =
+        object : NetworkBoundResource<PagedList<Movie>, List<MovieDetailsResponse>>(appExecutors) {
+            override fun loadFromDb(): LiveData<PagedList<Movie>> {
+                val config = PagedList.Config.Builder()
+                    .setEnablePlaceholders(false)
+                    .setInitialLoadSizeHint(4)
+                    .setPageSize(4)
+                    .build()
+                return LivePagedListBuilder(localDataSource.getMovies(), config).build()
+            }
 
-            override fun loadFromDb(): LiveData<List<Movie>> = localDataSource.getMovies()
-
-            override fun shouldFetch(data: List<Movie>?): Boolean = data == null || data.isEmpty()
+            override fun shouldFetch(data: PagedList<Movie>?): Boolean =
+                data == null || data.isEmpty()
 
             override fun createCall(): LiveData<ApiResponse<List<MovieDetailsResponse>>> =
                 remoteDataSource.discoverMovies2()
@@ -61,11 +70,19 @@ class Repository private constructor(
             }
         }.asLiveData()
 
-    override fun discoverShows(): LiveData<Resource<List<Show>>> =
-        object : NetworkBoundResource<List<Show>, List<ShowDetailsResponse>>(appExecutors) {
-            override fun loadFromDb(): LiveData<List<Show>> = localDataSource.getShows()
+    override fun discoverShows(): LiveData<Resource<PagedList<Show>>> =
+        object : NetworkBoundResource<PagedList<Show>, List<ShowDetailsResponse>>(appExecutors) {
+            override fun loadFromDb(): LiveData<PagedList<Show>> {
+                val config = PagedList.Config.Builder()
+                    .setEnablePlaceholders(false)
+                    .setInitialLoadSizeHint(4)
+                    .setPageSize(4)
+                    .build()
+                return LivePagedListBuilder(localDataSource.getShows(), config).build()
+            }
 
-            override fun shouldFetch(data: List<Show>?): Boolean = data == null || data.isEmpty()
+            override fun shouldFetch(data: PagedList<Show>?): Boolean =
+                data == null || data.isEmpty()
 
             override fun createCall(): LiveData<ApiResponse<List<ShowDetailsResponse>>> =
                 remoteDataSource.discoverShows2()
@@ -89,11 +106,18 @@ class Repository private constructor(
             }
         }.asLiveData()
 
-    override fun getFavoriteMovies(): LiveData<Resource<List<Movie>>> =
-        object : NetworkBoundResource<List<Movie>, List<MovieDetailsResponse>>(appExecutors) {
-            override fun loadFromDb(): LiveData<List<Movie>> = localDataSource.getFavoriteMovies()
+    override fun getFavoriteMovies(): LiveData<Resource<PagedList<Movie>>> =
+        object : NetworkBoundResource<PagedList<Movie>, List<MovieDetailsResponse>>(appExecutors) {
+            override fun loadFromDb(): LiveData<PagedList<Movie>> {
+                val config = PagedList.Config.Builder()
+                    .setEnablePlaceholders(false)
+                    .setInitialLoadSizeHint(4)
+                    .setPageSize(4)
+                    .build()
+                return LivePagedListBuilder(localDataSource.getFavoriteMovies(), config).build()
+            }
 
-            override fun shouldFetch(data: List<Movie>?): Boolean = false
+            override fun shouldFetch(data: PagedList<Movie>?): Boolean = false
 
             override fun createCall(): LiveData<ApiResponse<List<MovieDetailsResponse>>> =
                 remoteDataSource.discoverMovies2()
@@ -102,11 +126,18 @@ class Repository private constructor(
         }.asLiveData()
 
 
-    override fun getFavoriteShows(): LiveData<Resource<List<Show>>> =
-        object : NetworkBoundResource<List<Show>, List<ShowDetailsResponse>>(appExecutors) {
-            override fun loadFromDb(): LiveData<List<Show>> = localDataSource.getFavoriteShows()
+    override fun getFavoriteShows(): LiveData<Resource<PagedList<Show>>> =
+        object : NetworkBoundResource<PagedList<Show>, List<ShowDetailsResponse>>(appExecutors) {
+            override fun loadFromDb(): LiveData<PagedList<Show>> {
+                val config = PagedList.Config.Builder()
+                    .setEnablePlaceholders(false)
+                    .setInitialLoadSizeHint(4)
+                    .setPageSize(4)
+                    .build()
+                return LivePagedListBuilder(localDataSource.getFavoriteShows(), config).build()
+            }
 
-            override fun shouldFetch(data: List<Show>?): Boolean = false
+            override fun shouldFetch(data: PagedList<Show>?): Boolean = false
 
             override fun createCall(): LiveData<ApiResponse<List<ShowDetailsResponse>>> =
                 remoteDataSource.discoverShows2()

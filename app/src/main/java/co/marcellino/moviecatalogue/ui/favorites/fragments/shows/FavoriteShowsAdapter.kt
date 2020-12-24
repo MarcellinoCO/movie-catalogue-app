@@ -3,6 +3,8 @@ package co.marcellino.moviecatalogue.ui.favorites.fragments.shows
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import co.marcellino.moviecatalogue.R
 import co.marcellino.moviecatalogue.data.Show
@@ -11,7 +13,17 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.item_catalogue.view.*
 
 class FavoriteShowsAdapter(val listener: (Show) -> Unit) :
-    RecyclerView.Adapter<FavoriteShowsAdapter.ShowHolder>() {
+    PagedListAdapter<Show, FavoriteShowsAdapter.ShowHolder>(DIFF_CALLBACK) {
+
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Show>() {
+            override fun areItemsTheSame(oldItem: Show, newItem: Show): Boolean =
+                oldItem.title == newItem.title
+
+            override fun areContentsTheSame(oldItem: Show, newItem: Show): Boolean =
+                oldItem == newItem
+        }
+    }
 
     private val listShows = ArrayList<Show>()
     fun setShowsList(newListShows: List<Show>?) {
