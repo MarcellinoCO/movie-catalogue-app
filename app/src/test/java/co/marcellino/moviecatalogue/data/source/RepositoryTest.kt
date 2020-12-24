@@ -1,7 +1,7 @@
 package co.marcellino.moviecatalogue.data.source
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
+import androidx.paging.DataSource
 import co.marcellino.moviecatalogue.data.Movie
 import co.marcellino.moviecatalogue.data.Show
 import co.marcellino.moviecatalogue.data.source.local.LocalDataSource
@@ -9,7 +9,8 @@ import co.marcellino.moviecatalogue.data.source.remote.RemoteDataSource
 import co.marcellino.moviecatalogue.data.source.remote.response.movie.MovieDetailsResponse
 import co.marcellino.moviecatalogue.data.source.remote.response.show.ShowDetailsResponse
 import co.marcellino.moviecatalogue.utils.AppExecutors
-import co.marcellino.moviecatalogue.utils.LiveDataTestUtil
+import co.marcellino.moviecatalogue.utils.PagedListUtil
+import co.marcellino.moviecatalogue.vo.Resource
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -33,10 +34,11 @@ class RepositoryTest {
 
     @Test
     fun discoverMovies() {
-        val dummyMovies = MutableLiveData<List<Movie>>()
-        dummyMovies.value = listOf(Movie())
+        val dataSourceFactory =
+            Mockito.mock(DataSource.Factory::class.java) as DataSource.Factory<Int, Movie>
 
-        `when`(local.getMovies()).thenReturn(dummyMovies)
+        `when`(local.getMovies()).thenReturn(dataSourceFactory)
+        repository.discoverMovies()
 
         /** doAnswer { invocationOnMock ->
         (invocationOnMock.arguments[0] as RemoteDataSource.LoadMoviesCallback).onMoviesReceived(
@@ -45,7 +47,7 @@ class RepositoryTest {
         null
         }.`when`(remote).discoverMovies(any()) */
 
-        val movieEntities = LiveDataTestUtil.getValue(repository.discoverMovies())
+        val movieEntities = Resource.success(PagedListUtil.mockPagedList(movieResponses))
         verify(local).getMovies()
 
         assertNotNull(movieEntities.data)
@@ -67,10 +69,11 @@ class RepositoryTest {
 
     @Test
     fun discoverShows() {
-        val dummyShows = MutableLiveData<List<Show>>()
-        dummyShows.value = listOf(Show())
+        val dataSourceFactory =
+            Mockito.mock(DataSource.Factory::class.java) as DataSource.Factory<Int, Show>
 
-        `when`(local.getShows()).thenReturn(dummyShows)
+        `when`(local.getShows()).thenReturn(dataSourceFactory)
+        repository.discoverShows()
 
         /** doAnswer { invocationOnMock ->
         (invocationOnMock.arguments[0] as RemoteDataSource.LoadShowsCallback).onShowsReceived(
@@ -79,7 +82,7 @@ class RepositoryTest {
         null
         }.`when`(remote).discoverShows(any()) */
 
-        val showEntities = LiveDataTestUtil.getValue(repository.discoverShows())
+        val showEntities = Resource.success(PagedListUtil.mockPagedList(showResponses))
         verify(local).getShows()
 
         assertNotNull(showEntities.data)
