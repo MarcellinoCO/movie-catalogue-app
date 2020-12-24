@@ -15,19 +15,50 @@ Skenario instrumental testing:
 	Melakukan back press.
 	Memastikan RecylerView 'rv_movies' tampil.
 
-4. Menampilkan data TV Shows
+4. Menambahkan dan menghapus Movie favorit.
+    Memberi click pada menu 'menu_go_to_favorites'.
+    Memastikan TextView 'tv_movies_empty' tampil.
+    Melakukan back press.
+
+    Memberi click pada data pertama 'rv_movies'.
+    Memberi click pada menu 'menu_add_to_favorites'.
+    Melakukan back press.
+
+    Memberi click pada menu 'menu_go_to_favorites'.
+    Memastikan RecyclerView 'rv_movies' tampil.
+    Memberi click pada data pertama 'rv_movies'.
+    Memberi click pada menu 'menu_add_to_favorites'.
+
+5. Menampilkan data TV Shows
 	Click TabLayout dengan teks 'TV Shows'.
 	Memastikan RecylerView 'rv_shows' tampil.
 	Scroll 'rv_shows' ke posisi data terakhir.
 
-5. Menampilkan data TV Shows Details
+6. Menampilkan data TV Shows Details
 	Memberi click pada data pertama 'rv_shows'.
 	Memastikan TextView dari 'tv_details_title' tampil.
 	Memastikan ImageView 'iv_details_poster' tampil.
 
-3. Melakukan back press pada TV Shows Details.
+7. Melakukan back press pada TV Shows Details.
 	Memberi click pada data pertama 'rv_shows'.
 	Memastikan TextView dari 'tv_details_title' tampil.
 	Memastikan ImageView 'iv_details_poster' tampil.
 	Melakukan back press.
 	Memastikan RecylerView 'rv_shows' tampil.
+
+4. Menambahkan dan menghapus Show favorit.
+    Memberi click pada menu 'menu_go_to_favorites'.
+    Click TabLayout dengan teks 'TV Shows'.
+    Memastikan TextView 'tv_shows_empty' tampil.
+    Melakukan back press.
+
+    Click TabLayout dengan teks 'TV Shows'.
+    Memberi click pada data pertama 'rv_shows'.
+    Memberi click pada menu 'menu_add_to_favorites'.
+    Melakukan back press.
+
+    Memberi click pada menu 'menu_go_to_favorites'.
+    Click TabLayout dengan teks 'TV Shows'.
+    Memastikan RecyclerView 'rv_shows' tampil.
+    Memberi click pada data pertama 'rv_shows'.
+    Memberi click pada menu 'menu_add_to_favorites'.

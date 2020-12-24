@@ -65,6 +65,24 @@ class CatalogueActivityTest {
     }
 
     @Test
+    fun toggleFavoriteMovie() {
+        onView(withId(R.id.menu_go_to_favorites)).perform(click())
+        onView(withId(R.id.tv_movies_empty)).check(matches(isDisplayed()))
+        onView(isRoot()).perform(pressBack())
+
+        showMoviesDetails()
+
+        onView(withId(R.id.menu_add_favorite)).perform(click())
+        onView(isRoot()).perform(pressBack())
+
+        onView(withId(R.id.menu_go_to_favorites)).perform(click())
+        onView(withId(R.id.rv_movies)).check(matches(isDisplayed()))
+
+        showMoviesDetails()
+        onView(withId(R.id.menu_add_favorite)).perform(click())
+    }
+
+    @Test
     fun showShowsCatalogue() {
         onView(withText(resources.getString(R.string.title_shows))).perform(click())
         onView(withId(R.id.rv_shows)).check(matches(isDisplayed()))
@@ -95,5 +113,26 @@ class CatalogueActivityTest {
 
         onView(isRoot()).perform(pressBack())
         onView(withId(R.id.rv_shows)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun toggleFavoriteShow() {
+        onView(withId(R.id.menu_go_to_favorites)).perform(click())
+        onView(withText(resources.getString(R.string.title_shows))).perform(click())
+
+        onView(withId(R.id.tv_shows_empty)).check(matches(isDisplayed()))
+        onView(isRoot()).perform(pressBack())
+
+        showShowsDetails()
+
+        onView(withId(R.id.menu_add_favorite)).perform(click())
+        onView(isRoot()).perform(pressBack())
+
+        onView(withId(R.id.menu_go_to_favorites)).perform(click())
+        onView(withText(resources.getString(R.string.title_shows))).perform(click())
+        onView(withId(R.id.rv_shows)).check(matches(isDisplayed()))
+
+        showShowsDetails()
+        onView(withId(R.id.menu_add_favorite)).perform(click())
     }
 }
