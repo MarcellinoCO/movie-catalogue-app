@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import co.marcellino.moviecatalogue.data.Movie
 import co.marcellino.moviecatalogue.data.Show
 import co.marcellino.moviecatalogue.data.source.Repository
+import co.marcellino.moviecatalogue.vo.Resource
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -29,10 +30,10 @@ class CatalogueViewModelTest {
     private lateinit var repository: Repository
 
     @Mock
-    private lateinit var movieObserver: Observer<List<Movie>>
+    private lateinit var movieObserver: Observer<Resource<List<Movie>>>
 
     @Mock
-    private lateinit var showObserver: Observer<List<Show>>
+    private lateinit var showObserver: Observer<Resource<List<Show>>>
 
     @Before
     fun setUp() {
@@ -41,13 +42,13 @@ class CatalogueViewModelTest {
 
     @Test
     fun loadMoviesList() {
-        val dummyMovies = List(1) { _ -> Movie() }
-        val movies = MutableLiveData<List<Movie>>()
+        val dummyMovies = Resource.success(List(1) { Movie() })
+        val movies = MutableLiveData<Resource<List<Movie>>>()
         movies.value = dummyMovies
 
         `when`(repository.discoverMovies()).thenReturn(movies)
 
-        val movieEntities = viewModel.loadMoviesList().value
+        val movieEntities = viewModel.loadMoviesList().value?.data
         verify(repository).discoverMovies()
 
         assertNotNull(movieEntities)
@@ -59,13 +60,13 @@ class CatalogueViewModelTest {
 
     @Test
     fun loadShowsList() {
-        val dummyShows = List(1) { _ -> Show() }
-        val shows = MutableLiveData<List<Show>>()
+        val dummyShows = Resource.success(List(1) { Show() })
+        val shows = MutableLiveData<Resource<List<Show>>>()
         shows.value = dummyShows
 
         `when`(repository.discoverShows()).thenReturn(shows)
 
-        val showEntities = viewModel.loadShowsList().value
+        val showEntities = viewModel.loadShowsList().value?.data
         verify(repository).discoverShows()
 
         assertNotNull(showEntities)

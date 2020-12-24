@@ -2,17 +2,25 @@ package co.marcellino.moviecatalogue.viewmodel
 
 import co.marcellino.moviecatalogue.data.Movie
 import co.marcellino.moviecatalogue.data.Show
+import co.marcellino.moviecatalogue.data.source.Repository
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.junit.MockitoJUnitRunner
 
+@RunWith(MockitoJUnitRunner::class)
 class DetailsViewModelTest {
 
     private lateinit var viewModel: DetailsViewModel
 
+    @Mock
+    private lateinit var repository: Repository
+
     @Before
     fun setUp() {
-        viewModel = DetailsViewModel()
+        viewModel = DetailsViewModel(repository)
     }
 
     @Test
@@ -43,5 +51,27 @@ class DetailsViewModelTest {
         viewModel.show = Show()
         assert(viewModel.isShowInitialized())
         assertEquals(Show(), viewModel.show)
+    }
+
+    @Test
+    fun toggleMovieFavorite() {
+        viewModel.type = DetailsViewModel.TYPE_MOVIE
+
+        viewModel.movie = Movie()
+        assertEquals(false, viewModel.movie.isFavorite)
+
+        viewModel.toggleFavorite()
+        assertEquals(true, viewModel.movie.isFavorite)
+    }
+
+    @Test
+    fun toggleShowFavorite() {
+        viewModel.type = DetailsViewModel.TYPE_SHOW
+
+        viewModel.show = Show()
+        assertEquals(false, viewModel.show.isFavorite)
+
+        viewModel.toggleFavorite()
+        assertEquals(true, viewModel.show.isFavorite)
     }
 }
