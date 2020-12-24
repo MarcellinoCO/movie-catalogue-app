@@ -26,7 +26,14 @@
 
         <activity
             android:name=".ui.catalogue.CatalogueActivity"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ui.favorites.FavoritesActivity"
+            android:label="@string/title_favorites"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".ui.SplashScreenActivity"

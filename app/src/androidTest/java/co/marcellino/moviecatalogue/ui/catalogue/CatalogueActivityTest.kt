@@ -1,9 +1,12 @@
+@file:Suppress("DEPRECATION")
+
 package co.marcellino.moviecatalogue.ui.catalogue
 
 import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.pressBack
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -11,8 +14,9 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.rule.ActivityTestRule
 import co.marcellino.moviecatalogue.R
-import co.marcellino.moviecatalogue.utils.DataParser
-import co.marcellino.moviecatalogue.utils.RawReader
+import co.marcellino.moviecatalogue.utils.EspressoIdlingResource
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -23,18 +27,21 @@ class CatalogueActivityTest {
 
     private val resources = ApplicationProvider.getApplicationContext<Context>().resources
 
-    private val moviesList =
-        DataParser.getMoviesList(RawReader.readFromRaw(resources.openRawResource(R.raw.movies)))
-    private val showsList =
-        DataParser.getShowsList(RawReader.readFromRaw(resources.openRawResource(R.raw.shows)))
+    @Before
+    fun setUp() {
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.espressoTestIdlingResource)
+    }
+
+    @After
+    fun tearDown() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.espressoTestIdlingResource)
+    }
 
     @Test
     fun showMoviesCatalogue() {
         onView(withId(R.id.rv_movies)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_movies)).perform(
-            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
-                moviesList.size
-            )
+            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(20)
         )
     }
 
@@ -45,7 +52,6 @@ class CatalogueActivityTest {
         )
 
         onView(withId(R.id.tv_details_title)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_details_title)).check(matches(withText(moviesList[0].title)))
 
         onView(withId(R.id.iv_details_poster)).check(matches(isDisplayed()))
     }
@@ -63,9 +69,7 @@ class CatalogueActivityTest {
         onView(withText(resources.getString(R.string.title_shows))).perform(click())
         onView(withId(R.id.rv_shows)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_shows)).perform(
-            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
-                showsList.size
-            )
+            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(20)
         )
     }
 
@@ -81,7 +85,6 @@ class CatalogueActivityTest {
         )
 
         onView(withId(R.id.tv_details_title)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_details_title)).check(matches(withText(showsList[0].title)))
 
         onView(withId(R.id.iv_details_poster)).check(matches(isDisplayed()))
     }

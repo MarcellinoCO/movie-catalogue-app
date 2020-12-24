@@ -1,10 +1,16 @@
 package co.marcellino.moviecatalogue.data
 
 import android.os.Parcelable
+import androidx.annotation.NonNull
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
+@Entity(tableName = "show")
 data class Show(
+    @PrimaryKey
+    @NonNull
     val title: String = "",
     val year: String = "",
 
@@ -17,5 +23,10 @@ data class Show(
 
     val writer: String = "",
     val actors: String = "",
-    val awards: String = ""
-) : Parcelable
+    val awards: String = "",
+
+    var isFavorite: Boolean = false
+) : Parcelable {
+
+    fun isEmpty(): Boolean = (title == "")
+}
