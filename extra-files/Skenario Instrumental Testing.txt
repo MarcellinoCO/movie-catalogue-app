@@ -46,7 +46,7 @@ Skenario instrumental testing:
 	Melakukan back press.
 	Memastikan RecylerView 'rv_shows' tampil.
 
-4. Menambahkan dan menghapus Show favorit.
+8. Menambahkan dan menghapus Show favorit.
     Memberi click pada menu 'menu_go_to_favorites'.
     Click TabLayout dengan teks 'TV Shows'.
     Memastikan TextView 'tv_shows_empty' tampil.
