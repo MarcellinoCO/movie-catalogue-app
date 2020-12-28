@@ -9,6 +9,7 @@ This app is a project submission for [Dicoding's Belajar Android Jetpack Pro](ht
 - [x] Catalogue screen
 - [x] Details screen
 - [x] Discover movies and TV shows
+- [x] Add and remove favorite movie and TV show
 
 ### Things I used in the project
 - Kotlin
@@ -24,7 +25,14 @@ This app is a project submission for [Dicoding's Belajar Android Jetpack Pro](ht
   - Dependency injection
   - Android LiveData
   - Retrofit
+  - Room persistence
+  - Android paging
 
 ## Screenshots
+### Final Version
+![Catalogue screen](https://github.com/MarcellinoCO/movie-catalogue-app/blob/master/extra-files/screenshot-3.PNG)
+![Details screen](https://github.com/MarcellinoCO/movie-catalogue-app/blob/master/extra-files/screenshot-4.PNG)
+![Favorites screen](https://github.com/MarcellinoCO/movie-catalogue-app/blob/master/extra-files/screenshot-5.PNG)
+### Old Version
 ![Catalogue screen](https://github.com/MarcellinoCO/movie-catalogue-app/blob/master/extra-files/screenshot-1.PNG)
 ![Details screen](https://github.com/MarcellinoCO/movie-catalogue-app/blob/master/extra-files/screenshot-2.PNG)
